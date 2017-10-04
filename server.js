@@ -53,7 +53,10 @@ app.delete('/shopping-list/:id', (req, res) => {
   res.status(204).end();
 });
 
-
+// recipes
+app.get('/recipes', (req, res) => {
+  res.json(Recipes.get());
+})
 // when new recipe added, ensure has required fields. if not,
 // log error and return 400 status code with hepful message.
 // if okay, add new item, and return it with a status 201.
@@ -73,9 +76,12 @@ app.post('/recipes', jsonParser, (req, res) => {
 });
 
 
-app.get('/recipes', (req, res) => {
-  res.json(Recipes.get());
-})
+app.delete('/recipes/:id', (req, res) => {
+  Recipes.delete(req.params.id);
+  console.log(`Deleted shopping list item \`${req.params.id}\``);
+  res.status(204).end();
+});
+
 
 app.listen(process.env.PORT || 8080, () => {
   console.log(`Your app is listening on port ${process.env.PORT || 8080}`);
